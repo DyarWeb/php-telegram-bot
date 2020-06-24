@@ -20,12 +20,11 @@ class Base
 
     /**
      * Base constructor.
-     * @param string $token
      * @throws BotException
      */
-    public function __construct($token)
+    public function __construct()
     {
-        $this->token = $token;
+        $this->token = getenv('TOKEN');
         if (!$this->token) {
             throw new BotException("Token can\'t be empty");
         }
@@ -79,6 +78,7 @@ class Base
      * @param string $method
      * @param string $data
      * @return mixed
+     * @throws \AnarchyService\BotException
      */
     protected function uploadFile($method, $data)
     {

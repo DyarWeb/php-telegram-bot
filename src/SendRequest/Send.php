@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace AnarchyService;
+namespace AnarchyService\SendRequest;
 
 /**
  * Class Send
