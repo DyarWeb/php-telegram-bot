@@ -3,7 +3,7 @@
   "description": "PHP library for telegram bots",
   "type": "library",
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
   "license": "MIT",
   "keywords": ["telegram", "bot", "api", "oop", "PHP", "lib", "library", "php7"],
   "authors": [
