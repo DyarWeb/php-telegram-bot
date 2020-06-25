@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-
+namespace AnarchyService;
+use AnarchyService\Base;
 use AnarchyService\BotException;
 
 $root = __DIR__;

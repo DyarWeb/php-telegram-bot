@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace AnarchyService\SendRequest;
 
+use AnarchyService\Base;
+
 /**
  * Class Chat
  * @package AnarchyService
@@ -13,7 +15,7 @@ class Chat
      * @param string|int $chat_id
      * @param int $user_id
      * @param int $until_date
-     * @return mixed
+     * @return object
      */
     public static function kickChatMember($chat_id, $user_id, $until_date = null)
     {
@@ -24,7 +26,7 @@ class Chat
     /**
      * @param string|int $chat_id
      * @param int $user_id
-     * @return mixed
+     * @return object
      */
     public static function unbanChatMember($chat_id, $user_id)
     {
@@ -37,7 +39,7 @@ class Chat
      * @param int $user_id
      * @param array $permissions
      * @param int $until_date
-     * @return mixed
+     * @return object
      */
     public static function restrictChatMember($chat_id, $user_id, $permissions, $until_date = null)
     {
@@ -56,7 +58,7 @@ class Chat
      * @param bool $can_restrict_members
      * @param bool $can_pin_messages
      * @param bool $can_promote_members
-     * @return mixed
+     * @return object
      */
     public static function promoteChatMember($chat_id, $user_id, $can_change_info = false, $can_post_messages = false, $can_edit_messages = false, $can_delete_messages = false, $can_invite_users = false, $can_restrict_members = false, $can_pin_messages = false, $can_promote_members = false)
     {
@@ -68,7 +70,7 @@ class Chat
      * @param string|int $chat_id
      * @param int $user_id
      * @param string $custom_title
-     * @return mixed
+     * @return object
      */
     public static function setChatAdministratorCustomTitle($chat_id, $user_id, $custom_title)
     {
@@ -80,7 +82,7 @@ class Chat
      * @param string|int $chat_id
      * @param int $user_id
      * @param array $permissions
-     * @return mixed
+     * @return object
      */
     public static function setChatPermissions($chat_id, $user_id, $permissions)
     {
@@ -90,7 +92,7 @@ class Chat
 
     /**
      * @param string|int $chat_id
-     * @return mixed
+     * @return object
      */
     public static function exportChatInviteLink($chat_id)
     {
@@ -101,7 +103,7 @@ class Chat
     /**
      * @param string|int $chat_id
      * @param string $photo
-     * @return mixed
+     * @return object
      */
     public static function setChatPhoto($chat_id, $photo)
     {
@@ -111,7 +113,7 @@ class Chat
 
     /**
      * @param string|int $chat_id
-     * @return mixed
+     * @return object
      */
     public static function deleteChatPhoto($chat_id)
     {
@@ -122,7 +124,7 @@ class Chat
     /**
      * @param string|int $chat_id
      * @param string $title
-     * @return mixed
+     * @return object
      */
     public static function setChatTitle($chat_id, $title)
     {
@@ -133,7 +135,7 @@ class Chat
     /**
      * @param string|int $chat_id
      * @param string|null $description
-     * @return mixed
+     * @return object
      */
     public static function setChatDescription($chat_id, $description = null)
     {
@@ -145,7 +147,7 @@ class Chat
      * @param string|int $chat_id
      * @param int $message_id
      * @param bool $disable_notification
-     * @return mixed
+     * @return object
      */
     public static function pinChatMessage($chat_id, $message_id, $disable_notification = false)
     {
@@ -155,7 +157,7 @@ class Chat
 
     /**
      * @param string|int $chat_id
-     * @return mixed
+     * @return object
      */
     public static function unpinChatMessage($chat_id)
     {
@@ -165,7 +167,7 @@ class Chat
 
     /**
      * @param string|int $chat_id
-     * @return mixed
+     * @return object
      */
     public static function leaveChat($chat_id)
     {
@@ -175,7 +177,7 @@ class Chat
 
     /**
      * @param string|int $chat_id
-     * @return mixed
+     * @return object
      */
     public static function getChat($chat_id)
     {
@@ -185,7 +187,7 @@ class Chat
 
     /**
      * @param string|int $chat_id
-     * @return mixed
+     * @return object
      */
     public static function getChatAdministrators($chat_id)
     {
@@ -195,7 +197,7 @@ class Chat
 
     /**
      * @param string|int $chat_id
-     * @return mixed
+     * @return object
      */
     public static function getChatMembersCount($chat_id)
     {
@@ -206,7 +208,7 @@ class Chat
     /**
      * @param string|int $chat_id
      * @param int $user_id
-     * @return mixed
+     * @return object
      */
     public static function getChatMember($chat_id, $user_id)
     {
@@ -217,7 +219,7 @@ class Chat
     /**
      * @param string|int $chat_id
      * @param string $sticker_set_name
-     * @return mixed
+     * @return object
      */
     public static function setChatStickerSet($chat_id, $sticker_set_name)
     {
@@ -227,7 +229,7 @@ class Chat
 
     /**
      * @param string|int $chat_id
-     * @return mixed
+     * @return object
      */
     public static function deleteChatStickerSet($chat_id)
     {

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace AnarchyService\SendRequest;
 
+use AnarchyService\Base;
+
 /**
  * Class Send
  * @package AnarchyService
@@ -17,7 +19,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendMessage($chat_id, $text, $parse_mode = null, $disable_web_page_preview = false, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -31,7 +33,7 @@ class Send
      * @param int $from_chat_id
      * @param bool $disable_notification
      * @param int $message_id
-     * @return mixed
+     * @return object
      */
     public static function forwardMessage($chat_id, $from_chat_id, $disable_notification = false, $message_id)
     {
@@ -48,7 +50,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendPhoto($chat_id, $photo, $caption = null, $parse_mode = null, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -68,7 +70,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendAudio($chat_id, $audio, $caption = null, $parse_mode = null, $duration = null, $performer = null, $title = null, $thumb = null, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -85,7 +87,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendDocument($chat_id, $document, $thumb = null, $caption = null, $parse_mode = null, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -107,7 +109,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendVideo($chat_id, $video, $duration = null, $width = null, $height = null, $thumb = null, $caption = null, $parse_mode = null, $supports_streaming = false, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -129,7 +131,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendAnimation($chat_id, $animation, $duration = null, $width = null, $height = null, $thumb = null, $caption = null, $parse_mode = null, $supports_streaming = false, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -154,7 +156,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendVideoNote($chat_id, $video_note, $duration = null, $length = null, $thumb = null, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -173,7 +175,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendLocation($chat_id, $latitude, $longitude, $live_period = null, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -195,7 +197,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendVenue($chat_id, $latitude, $longitude, $title, $address, $foursquare_id = null, $foursquare_type = null, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -213,7 +215,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendContact($chat_id, $phone_number, $first_name, $last_name = null, $vcard = null, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -225,7 +227,7 @@ class Send
     /**
      * @param int|string $chat_id
      * @param string $action
-     * @return mixed
+     * @return object
      */
     public static function sendChatAction($chat_id, $action)
     {
@@ -254,7 +256,7 @@ class Send
      * @param bool $disable_notification
      * @param int|null $reply_to_message_id
      * @param array|null $reply_markup
-     * @return mixed
+     * @return object
      */
     public static function sendSticker($chat_id, $sticker, $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
     {
