@@ -2,8 +2,6 @@
   "name": "anarchyservice/anarchylib",
   "description": "PHP library for telegram bots",
   "type": "library",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "license": "MIT",
   "keywords": ["telegram", "bot", "api", "oop", "PHP", "lib", "library", "php7"],
   "authors": [
@@ -14,9 +12,15 @@
   "require": {
     "php": ">=7.4.0"
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "AnarchyService\\": "src/"
-    }
+    },
+    "files": [
+      "src/jdf.php",
+      "src/Bootstrap.php"
+    ]
   }
 }
