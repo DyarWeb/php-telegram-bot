@@ -8,7 +8,7 @@ use AnarchyService\SendRequest\Send;
 require_once 'vendor/autoload.php';
 
 $tg = new Base();
-if (isset($argv[1])) {
+if ($argv[1]) {
     $argument = trim($argv[1]);
     if ($argument != '') {
         Get::set(file_get_contents($argument));

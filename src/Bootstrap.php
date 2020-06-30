@@ -10,8 +10,7 @@ const ENV_VERSION = '1';
         $envPathExample = $envPath . '.example';
 
         if (!is_file($envPath) || filesize($envPath) === 0) {
-            $envContent = file_get_contents($envPathExample);
-            file_put_contents($envPath, $envContent);
+            copy($envPathExample,$envPath);
         }
         require_once $envPath;
         if (getenv('VERSION') !== ENV_VERSION) {

@@ -9,15 +9,19 @@ namespace AnarchyService\DB;
  */
 class DB
 {
+    public static $instance;
 
     /**
      * @return Json|MongoDB|Mysql
      */
+
     public static function Database()
     {
-        if (getenv('DB' == 'json')) $DB = new Json();
-        elseif (getenv('DB' == 'mysql')) $DB = new Mysql();
-        elseif (getenv('DB' == 'mongodb')) $DB = new MongoDB();
-        return $DB;
+        $DB = getenv('DB');
+        if     ($DB == 'json') self::$instance = new Json();
+        elseif ($DB == 'mysql') self::$instance = new Mysql();
+        elseif ($DB == 'mongodb') self::$instance = new MongoDB();
+        return self::$instance;
+
     }
 }

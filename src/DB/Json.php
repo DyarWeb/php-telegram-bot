@@ -9,27 +9,41 @@ namespace AnarchyService\DB;
  */
 class Json
 {
+    private $DBDir;
+    public function __construct()
+    {
+       $this->DBDir = getenv('jsonDBDir');
+    }
+
     /**
      * @param string $DBName
+     * @param int $mode
      * @return bool
      */
-    public function CreateDB(string $DBName)
+    public function CreateDB(string $DBName , $mode = 755)
     {
-        return mkdir($DBName);
+        $permission = 0;
+        $permission .= $mode;
+        if (!is_dir($this->DBDir)) mkdir($this->DBDir,$permission);
+        return mkdir($this->DBDir.'/'.$DBName ,$permission);
     }
 
     /**
      * @param string $DBName
      * @param string $TableName
      * @param array $columns
+     * @param int $mode
      * @return false|int
      */
-    public function CreateTable(string $DBName, string $TableName, array $columns)
+    public function CreateTable(string $DBName, string $TableName, array $columns , $mode = 444)
     {
+        $permission = 0;
+        $permission .= $mode;
+        if (!is_dir($DBName)) $this->CreateDB($DBName,755);
         $json = json_encode([$columns]);
-        $fileName = $DBName . '/' . $TableName . '.json';
+        $fileName = $this->DBDir.'/'.$DBName . '/' . $TableName . '.json';
         $res = file_put_contents($fileName, $json);
-        $res .= chmod($fileName, 0444);
+        $res .= chmod($fileName, $permission);
         return $res;
     }
 
@@ -41,7 +55,7 @@ class Json
      */
     public function InsertData(string $DBName, string $TableName, array $data)
     {
-        $fileName = $DBName . '/' . $TableName . '.json';
+        $fileName = $this->DBDir.'/'.$DBName . '/' . $TableName . '.json';
         $out = json_decode(file_get_contents($fileName), true);
         $out[] = $data;
         return file_put_contents($fileName, json_encode($out));
@@ -56,7 +70,7 @@ class Json
      */
     public function UpdateData(string $DBName, string $TableName, array $data, array $where)
     {
-        $fileName = $DBName . '/' . $TableName . '.json';
+        $fileName = $this->DBDir.'/'.$DBName . '/' . $TableName . '.json';
         $out = json_decode(file_get_contents($fileName), true);
         foreach ($out as $item) {
             $res = true;
@@ -79,7 +93,7 @@ class Json
      */
     public function DeleteData(string $DBName, string $TableName, array $where)
     {
-        $fileName = $DBName . '/' . $TableName . '.json';
+        $fileName = $this->DBDir.'/'.$DBName . '/' . $TableName . '.json';
         $out = json_decode(file_get_contents($fileName), true);
         foreach ($out as $item) {
             $res = true;
@@ -102,7 +116,7 @@ class Json
      */
     public function SelectData(string $DBName, string $TableName, $where = null)
     {
-        $fileName = $DBName . '/' . $TableName . '.json';
+        $fileName = $this->DBDir.'/'.$DBName . '/' . $TableName . '.json';
         $out = json_decode(file_get_contents($fileName), true);
         if (!$out || $where == null) return $out;
         else {
@@ -120,4 +134,5 @@ class Json
             return $items;
         }
     }
+
 }
