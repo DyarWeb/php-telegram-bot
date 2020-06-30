@@ -2,12 +2,12 @@
 declare(strict_types=1);
 
 
-namespace AnarchyService;
-use AnarchyService\Base;
+namespace DyarWeb;
+use DyarWeb\Base;
 
 /**
  * Class Get
- * @package AnarchyService
+ * @package DyarWeb
  */
 class Get
 {
@@ -39,7 +39,7 @@ class Get
         self::$chat_id = $input->message->chat->id;
         self::$chat_title = $input->message->chat->title;
         self::$chat_username = $input->message->chat->username ?? null;
-        self::$chat_type = $input->message->chat->type;
+        self::$chat_type = $input->message->chat->type ?? null;
         self::$text = $input->message->text ?? null;
         self::$caption = $input->message->caption ?? null;
         self::$new_chat_member_user_id = $input->message->new_chat_member->id ?? null;

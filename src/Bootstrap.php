@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use AnarchyService\BotException;
+use DyarWeb\BotException;
 
 const ENV_VERSION = '1';
 {

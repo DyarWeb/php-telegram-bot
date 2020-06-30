@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace AnarchyService\DB;
+namespace DyarWeb\DB;
 
 /**
  * Class DB
- * @package AnarchyService
+ * @package DyarWeb
  */
 class DB
 {

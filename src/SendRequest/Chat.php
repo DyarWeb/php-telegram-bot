@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace AnarchyService\SendRequest;
+namespace DyarWeb\SendRequest;
 
-use AnarchyService\Base;
+use DyarWeb\Base;
 
 /**
  * Class Chat
- * @package AnarchyService
+ * @package DyarWeb
  */
 class Chat
 {

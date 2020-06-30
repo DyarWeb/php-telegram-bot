@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace AnarchyService;
+namespace DyarWeb;
 
-use AnarchyService\BotException;
+use DyarWeb\BotException;
 
 /**
  * Class Base

@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace AnarchyService\SendRequest;
-use AnarchyService\Base;
+namespace DyarWeb\SendRequest;
+use DyarWeb\Base;
 
 /**
  * Class Edit
- * @package AnarchyService
+ * @package DyarWeb
  */
 class Edit
 {

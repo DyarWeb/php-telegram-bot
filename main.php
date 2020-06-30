@@ -1,17 +1,19 @@
 <?php
 declare(strict_types=1);
 
-use AnarchyService\Base;
-use AnarchyService\Get;
-use AnarchyService\SendRequest\Send;
+use DyarWeb\Base;
+use DyarWeb\DB\DB;
+use DyarWeb\Get;
+use DyarWeb\SendRequest\Send;
 
 require_once 'vendor/autoload.php';
 
 $tg = new Base();
+$DB = DB::Database();
 if ($argv[1]) {
     $argument = trim($argv[1]);
     if ($argument != '') {
-        Get::set(file_get_contents($argument));
+        Get::set(json_decode(file_get_contents($argument)));
         unlink($argument);
     }
 } else {
