@@ -47,6 +47,29 @@ class Json
     }
 
     /**
+     * @param $DBName
+     * @param $TableName
+     * @return bool
+     */
+    public function DeleteTable($DBName, $TableName)
+    {
+        return unlink($this->DBDir . '/' . $DBName . '/' . $TableName . '.json');
+    }
+
+    /**
+     * @param $DBName
+     * @return bool
+     */
+    public function DeleteDB($DBName)
+    {
+        $files = array_diff(scandir($this->DBDir . '/' . $DBName), ['.', '..']);
+        foreach ($files as $file) {
+            (is_dir($this->DBDir . '/' . $DBName . '/' . $file)) ? $this->DeleteDB($this->DBDir . '/' . $DBName . '/' . $file) : unlink($this->DBDir . '/' . $DBName . '/' . $file);
+        }
+        return rmdir($this->DBDir . '/' . $DBName);
+    }
+
+    /**
      * @param string $DBName
      * @param string $TableName
      * @param array $data
@@ -55,9 +78,12 @@ class Json
     public function InsertData($DBName, $TableName, array $data)
     {
         $fileName = $this->DBDir . '/' . $DBName . '/' . $TableName . '.json';
-        $out = json_decode(file_get_contents($fileName), true);
-        $out[] = $data;
-        return file_put_contents($fileName, json_encode($out));
+        if (!is_file($fileName)) return $this->CreateTable($DBName,$TableName,$data);
+        else {
+            $out = json_decode(file_get_contents($fileName));
+            $out[] = $data;
+            return file_put_contents($fileName, json_encode($out));
+        }
     }
 
     /**
@@ -117,7 +143,7 @@ class Json
     {
         $fileName = $this->DBDir . '/' . $DBName . '/' . $TableName . '.json';
         if (is_file($fileName)) {
-            $out = json_decode(file_get_contents($fileName), true);
+            $out = json_decode(file_get_contents($fileName));
             if ($where == null) return $out;
             else {
                 $items = [];
