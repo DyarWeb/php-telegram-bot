@@ -55,6 +55,9 @@ class Get
     public static $reply_to_from_last_name;
     public static $reply_to_from_username;
     public static $reply_to_from_language_code;
+    public static $reply_to_text;
+    public static $reply_to_caption;
+
 
     /**
      * @param $input
@@ -91,6 +94,8 @@ class Get
                 self::$reply_to_from_last_name = $input->$type->reply_to_message->from->last_name ?? null;
                 self::$reply_to_from_username = $input->$type->reply_to_message->from->username ?? null;
                 self::$reply_to_from_language_code = $input->$type->reply_to_message->from->language_code ?? null;
+                self::$reply_to_text = $input->$type->reply_to_message->text ?? null;
+                self::$reply_to_caption = $input->$type->reply_to_message->caption ?? null;
             } elseif(isset($input->message->new_chat_member)){
                 self::$new_chat_member_id = $input->message->new_chat_member->id;
                 self::$new_chat_member_is_bot = $input->message->new_chat_member->is_bot;
@@ -105,7 +110,7 @@ class Get
                 self::$forward_from_chat_username = $input->message->forward_from_chat->username ?? null;
             } elseif(isset($input->message->new_chat_photo)){
                 self::$new_chat_photo_file_id = $input->message->new_chat_photo->file_id;
-            }  elseif(isset($input->message->new_chat_title)){
+            } elseif(isset($input->message->new_chat_title)){
                 self::$new_chat_title = $input->message->new_chat_title;
             }
         } elseif (isset($input->callback_query)) {
