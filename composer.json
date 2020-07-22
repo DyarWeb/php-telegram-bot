@@ -2,7 +2,7 @@
   "name": "dyarweb/php-telegram-bot",
   "description": "Complete Library for Telegram Bots With Pure PHP (Full OOP)",
   "type": "library",
-  "license": "MIT",
+  "license": "GPL3",
   "homepage": "https://DyarWeb.Com",
   "keywords": ["telegram", "bot", "api", "oop", "PHP", "lib", "library", "php7", "php7.4", "new", "full", "last version"],
   "authors": [
