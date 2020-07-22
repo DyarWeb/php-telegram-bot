@@ -17,36 +17,6 @@ class Json
     }
 
     /**
-     * @param string $DBName
-     * @param string $TableName
-     * @param array $columns
-     * @param int $mode
-     * @return false|int
-     */
-    public function CreateTable($DBName, $TableName, array $columns, $mode = 600)
-    {
-        $mode = '0' . $mode;
-        if (!is_dir($DBName)) $this->CreateDB($DBName, 0700);
-        $json = json_encode([$columns]);
-        $fileName = $this->DBDir . '/' . $DBName . '/' . $TableName . '.json';
-        $res = file_put_contents($fileName, $json);
-        $res .= chmod($fileName, (int)$mode);
-        return $res;
-    }
-
-    /**
-     * @param string $DBName
-     * @param int $mode
-     * @return bool
-     */
-    public function CreateDB($DBName, $mode = 700)
-    {
-        $mode = '0' . $mode;
-        if (!is_dir($this->DBDir)) mkdir($this->DBDir, (int)$mode);
-        return mkdir($this->DBDir . '/' . $DBName, (int)$mode);
-    }
-
-    /**
      * @param $DBName
      * @param $TableName
      * @return bool
@@ -78,12 +48,54 @@ class Json
     public function InsertData($DBName, $TableName, array $data)
     {
         $fileName = $this->DBDir . '/' . $DBName . '/' . $TableName . '.json';
-        if (!is_file($fileName)) return $this->CreateTable($DBName,$TableName,$data);
-        else {
+        if (!is_file($fileName)) {
+            return $this->CreateTable($DBName, $TableName, $data);
+        } else {
             $out = json_decode(file_get_contents($fileName));
             $out[] = $data;
             return file_put_contents($fileName, json_encode($out));
         }
+    }
+
+    /**
+     * @param string $DBName
+     * @param string $TableName
+     * @param array $columns
+     * @param int|string $mode
+     * @return false|int
+     */
+    public function CreateTable($DBName, $TableName, array $columns, $mode = 0600)
+    {
+        if (!is_dir($DBName)) {
+            $this->CreateDB($DBName, 0700);
+        }
+        $json = json_encode([$columns]);
+        $fileName = $this->DBDir . '/' . $DBName . '/' . $TableName . '.json';
+        $res = file_put_contents($fileName, $json);
+        $res .= chmod($fileName, $mode);
+        return $res;
+    }
+
+    /**
+     * @param string $DBName
+     * @param int $mode
+     * @return bool
+     */
+    public function CreateDB($DBName, int $mode = 0700)
+    {
+        if (!is_dir($this->DBDir)) {
+            mkdir($this->DBDir, 0700);
+        }
+        $Folders = explode('/', $DBName);
+        $dir = '';
+        $return = '';
+        foreach ($Folders as $folder) {
+            $dir .= '/' . $folder;
+            if (!is_dir($this->DBDir . $dir)) {
+                $return .= mkdir($this->DBDir . $dir, $mode);
+            }
+        }
+        return $return;
     }
 
     /**
@@ -96,16 +108,20 @@ class Json
     public function UpdateData($DBName, $TableName, array $data, array $where)
     {
         $fileName = $this->DBDir . '/' . $DBName . '/' . $TableName . '.json';
-        $out = json_decode(file_get_contents($fileName), true);
+        $out = json_decode(file_get_contents($fileName));
         foreach ($out as $item) {
             $res = true;
             foreach ($where as $key => $value) {
-                if ($item[$key] != $value) {
+                if ($item->$key != $value || !$item->$key) {
                     $res = false;
                     break;
                 }
             }
-            if ($res) foreach ($data as $key => $value) $out[$key] = $value;
+            if ($res) {
+                foreach ($data as $key => $value) {
+                    $item->$key = $value;
+                }
+            }
         }
         return file_put_contents($fileName, json_encode($out));
     }
@@ -119,47 +135,70 @@ class Json
     public function DeleteData($DBName, $TableName, array $where)
     {
         $fileName = $this->DBDir . '/' . $DBName . '/' . $TableName . '.json';
-        $out = json_decode(file_get_contents($fileName), true);
-        foreach ($out as $item) {
-            $res = true;
-            foreach ($where as $key => $value) {
-                if ($item[$key] != $value) {
-                    $res = false;
-                    break;
+        if (is_file($fileName)) {
+            $out = json_decode(file_get_contents($fileName));
+            $i=-1;
+            foreach ($out as $item) {
+                $i++;
+                $res = true;
+                foreach ($where as $key => $value) {
+                    if ($item->$key != $value || !$item->$key) {
+                        $res = false;
+                        break;
+                    }
+                }
+                if ($res) {
+                    unset($out[$i]);
                 }
             }
-            if ($res) unset($out[$item]);
+            $out = array_values($out);
+            return file_put_contents($fileName, json_encode($out));
+        } else {
+            return false;
         }
-        return file_put_contents($fileName, json_encode($out));
     }
 
     /**
      * @param string $DBName
      * @param string $TableName
      * @param null $where
+     * @param null $limit
      * @return array|mixed
      */
-    public function SelectData($DBName, $TableName, $where = null)
+    public function SelectData($DBName, $TableName, array $where = null, int $limit = null)
     {
         $fileName = $this->DBDir . '/' . $DBName . '/' . $TableName . '.json';
         if (is_file($fileName)) {
             $out = json_decode(file_get_contents($fileName));
-            if ($where == null) return $out;
-            else {
+            if ($where == null) {
+                return $out;
+            } else {
                 $items = [];
                 foreach ($out as $item) {
                     $res = true;
                     foreach ($where as $key => $value) {
-                        if ($item[$key] != $value) {
+                        if ($item->$key != $value || !$item->$key) {
                             $res = false;
                             break;
                         }
                     }
-                    if ($res) $items[] = $out[$item];
+                    if ($res) {
+                        $items[] = $item;
+                    }
+                    if ($limit != null && count($items) >= $limit) {
+                        break;
+                    }
                 }
-                return $items;
+                if (count($items) == 1) {
+                    return (object)$items[0];
+                } elseif (empty($items)) {
+                    return false;
+                } else {
+                    return (object)$items;
+                }
             }
-        } else return false;
+        } else {
+            return false;
+        }
     }
-
 }

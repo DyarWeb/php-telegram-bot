@@ -84,9 +84,9 @@ class Chat
      * @param array $permissions
      * @return object
      */
-    public static function setChatPermissions($chat_id, $user_id, $permissions)
+    public static function setChatPermissions($chat_id, $permissions)
     {
-        $params = compact('chat_id', 'user_id', 'permissions');
+        $params = compact('chat_id', 'permissions');
         return Base::sendRequest('setChatPermissions', $params);
     }
 
@@ -235,5 +235,17 @@ class Chat
     {
         $params = compact('chat_id');
         return Base::sendRequest('deleteChatStickerSet', $params);
+    }
+
+    /**
+     * @param string|int $chat_id
+     * @param int|null $message_id
+     * @return object
+     */
+    public static function deleteMessage($chat_id, $message_id = null)
+    {
+        $params = compact('chat_id', 'message_id');
+
+        return Base::sendRequest('deleteMessage', $params);
     }
 }

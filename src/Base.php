@@ -39,7 +39,12 @@ class Base
      */
     public static function sendRequest($method, $params)
     {
-        return json_decode(file_get_contents(self::$baseURL . $method . '?' . http_build_query($params)));
+        $res = file_get_contents(self::$baseURL . $method . '?' . http_build_query($params));
+        if ($res) {
+            return json_decode($res);
+        } else {
+            return $res;
+        }
     }
 
     /**
@@ -70,5 +75,4 @@ class Base
     {
         return json_decode(file_get_contents('php://input'));
     }
-
 }

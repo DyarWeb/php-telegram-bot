@@ -86,18 +86,6 @@ class Edit
     }
 
     /**
-     * @param string|int $chat_id
-     * @param int|null $message_id
-     * @return object
-     */
-    public static function deleteMessage($chat_id, $message_id = null)
-    {
-        $params = compact('chat_id', 'message_id');
-
-        return Base::sendRequest('deleteMessage', $params);
-    }
-
-    /**
      * @param int|string|null $chat_id
      * @param int|null $message_id
      * @param string|null $inline_message_id
